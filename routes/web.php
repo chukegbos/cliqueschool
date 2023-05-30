@@ -23,9 +23,21 @@ Route::group(['prefix' => 'user'], function(){
         Route::get('/', 'SchoolController@index');
         Route::get('create', 'SchoolController@create');
         Route::post('create', 'SchoolController@store');
+        
         Route::get('status/{id}', 'SchoolController@status');
         Route::get('delete/{id}', 'SchoolController@destroy');
         Route::get('{school_code}', 'SchoolController@view')->name('schoolview');
+   
+        Route::group(['prefix' => 'lecture'], function(){
+            Route::post('create', 'LectureController@index');
+            Route::get('{lecture_code}', 'LectureController@view')->name('lectureview');
+        });
+
+        Route::group(['prefix' => 'assignment'], function(){
+            Route::post('create', 'AssignmentController@store');
+           
+        });
+        
     });
 });
 

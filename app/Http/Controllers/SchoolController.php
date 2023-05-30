@@ -89,14 +89,12 @@ class SchoolController extends Controller
     
         $learners = Learner::where('deleted_at', NULL)->where('class_id', $school->id)->get();
         $lectures = Lecture::where('deleted_at', NULL)->where('school_id', $school->id)->get();
-        $assignements = Assignment::where('deleted_at', NULL)->where('school_id', $school->id)->get();
         $liveClasses = NULL;
         $quizzes = NULL;
-        $data= [
+        return $data= [
             'school' => $school,
             'learners' => $learners,
             'lectures' => $lectures,
-            'assignements' => $assignements,
             'quizzes' => $quizzes,
             'liveClasses' => $liveClasses,
         ];

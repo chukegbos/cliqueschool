@@ -11,7 +11,7 @@ class Assignment extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'school_id', 'pdf'
+        'lecture_id', 'pdf', 'late_submission', 'status'
     ];
 
     protected $hidden = [
