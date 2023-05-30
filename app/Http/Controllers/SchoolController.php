@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Learner;
+use App\Models\Lecture;
+use App\Models\Assignment;
 use App\Models\School;
 use Auth;
 
@@ -81,6 +83,42 @@ class SchoolController extends Controller
             return redirect()->back()->withErrors(['School not found. Just try again']);
         }
         $learners = Learner::where('deleted_at', NULL)->where('class_id', $school->id)->get();
-        return view('user.viewSchool', compact('school', 'learners'));
+        $lectures = Lecture::where('deleted_at', NULL)->where('school_id', $school->id)->get();
+        $assignements = Assignment::where('deleted_at', NULL)->where('school_id', $school->id)->get();
+        $liveClasses = NULL;
+        $quizzes = NULL;
+        $data= [
+            'school' => $school,
+            'learners' => $learners,
+            'lectures' => $lectures,
+            'assignements' => $assignements,
+            'quizzes' => $quizzes,
+            'liveClasses' => $liveClasses,
+        ];
+        return view('user.viewSchool', compact('data'));
+    }
+
+    public function destroy($id)
+    {
+        $school =  School::where('deleted_at', NULL)->findOrFail($id);
+        $school->deleted_at = NUll;
+        $school->update();
+        return redirect()->back()->with('success', 'School deleted!');
+    }
+
+    public function status($id)
+    {
+        $school =  School::where('deleted_at', NULL)->findOrFail($id);
+        if ($school->status==1) {
+            $school->status = 0;
+            $status = 'School Deactivated';
+        }
+        else {
+            $school->status = 1;
+            $status = 'School Activated';
+        }
+
+        $school->update();
+        return redirect()->back()->with('success', $status);
     }
 }

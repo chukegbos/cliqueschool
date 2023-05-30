@@ -1,11 +1,11 @@
 @extends('layouts.mainuser')
-@section('pageTitle', $school->name)
+@section('pageTitle', $data['school']->name)
 @section('content')
 <div class="page-header">
     <div class="page-block">
         <div class="align-items-center">
             <div class="page-header-title">
-                <h2 class="m-b-10">{{ $school->name }}</h2>
+                <h2 class="m-b-10">{{ $data['school']->name }}</h2>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($learners as $learner)
+                            @foreach($data['learners'] as $learner)
                                 <tr>
                                     <td>{{ $learner->learner()->lastname }} {{ $learner->learner()->firstname }}</td>
                                     <td>{{ $learner->learner()->email }}</td>

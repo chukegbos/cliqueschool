@@ -15,7 +15,7 @@ class School extends Model
      * @var array
      */
     protected $fillable = [
-        'school_code', 'user_id', 'type_teaching', 'audience', 'featured_image', 'featured_video', 'name', 'slug', 'views', 'requirements', 'descriptions', 'aim', 'category'
+        'school_code', 'user_id', 'type_teaching', 'audience', 'featured_image', 'featured_video', 'name', 'slug', 'views', 'requirements', 'descriptions', 'aim', 'category', 'status'
     ];
 
     /**
@@ -38,7 +38,7 @@ class School extends Model
           return 'Disabled';
           break;
         case 1:
-            return 'Enabled';
+            return 'Active';
             break;
       }
     }
