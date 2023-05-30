@@ -60,7 +60,7 @@
 
                     <div class="form-group">
                         <label>Featured Image <span class="text text-info"><small><i>(Optional)</i></small></span></label>
-                        <input class="form-control" type="file" name="featured_image" maxlength="64" required>
+                        <input class="form-control" type="file" name="featured_image" maxlength="64">
                     </div>
 
                     <div class="form-group">
@@ -73,7 +73,7 @@
                         <textarea rows="2" id="description" name="description" class="form-control"></textarea>
                     </div>
 
-                    <button class="btn btn-info btn-block" type="submit">Proceed</button>
+                    <button class="btn btn-grey btn-block" type="submit">Proceed</button>
                 </form>
             </div>
         </div>

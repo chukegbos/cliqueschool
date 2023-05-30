@@ -16,4 +16,8 @@ class Category extends Model
     protected $hidden = [
         'deleted_at', 
     ];
+
+    public function school(){
+        return $this->hasOne(School::class, 'category');
+    }
 }

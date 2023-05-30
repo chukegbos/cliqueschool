@@ -18,7 +18,16 @@
         <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     </head>
-
+    <style>
+        .btn-orange{
+            background: #E99C66;
+            color: #fff;
+        }
+        .btn-grey{
+            background: #7782BA;
+            color: #fff;
+        }
+    </style>
     <body>
         @include('components.header') 
     

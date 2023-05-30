@@ -27,7 +27,8 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = School::where('deleted_at', NULL)->where('user_id', auth()->user()->id)->latest()->get();
+        $schools = School::where('deleted_at', NULL)->where('user_id', auth()->user()->id)->latest()->with(['catigory'])->get();
+        // dd($schools);
         return view('user.school', compact('schools'));
     }
 
