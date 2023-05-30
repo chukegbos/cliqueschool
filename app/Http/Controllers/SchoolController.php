@@ -82,6 +82,11 @@ class SchoolController extends Controller
         if(!$school){
             return redirect()->back()->withErrors(['School not found. Just try again']);
         }
+
+        if($school->status == 0){
+            return redirect()->back()->withErrors(['The school has been deactivated by the owner.']);
+        }
+    
         $learners = Learner::where('deleted_at', NULL)->where('class_id', $school->id)->get();
         $lectures = Lecture::where('deleted_at', NULL)->where('school_id', $school->id)->get();
         $assignements = Assignment::where('deleted_at', NULL)->where('school_id', $school->id)->get();

@@ -29,26 +29,32 @@
                     @foreach($schools as $school)
                         <tr>
                         <td>
-                            <a href="#" style="font-size:large; font-weight: 700px;" class="text-primary"><strong>{{$school->school_code}}</strong></a>
+                            <a href="{{ url('user/my-school') }}/{{ $school->school_code }}" style="font-size:large; font-weight: 700px;" class="text-primary"><strong>{{$school->school_code}}</strong></a>
                         </td>
                             <td>
                                 <div class="d-inline-block align-middle">
                                     <img src="{{ $school->featured_image }}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
                                     <div class="d-inline-block">
-                                        <h6 class="m-b-0">{{$school->name}}</h6>
+                                        <h6 class="m-b-0">{{ $school->name }}</h6>
                                     </div>
                                 </div>
                             </td>
-                            <td>{{$school->catigory->name}}</td>
-                            <td>{{ date('Y-m-d h:i A', strtotime($school->created_at))}}</td>
+                            <td>{{ $school->catigory->name }}</td>
+                            <td>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($school->created_at))->toFormattedDateString() }}</td>
+                            <!-- <td>{{ date('Y-m-d h:i A', strtotime($school->created_at))}}</td> -->
                             <td><span class="badge badge-light-{{$school->getStatusColor()}}">{{$school->getStatus()}}</span></td>
                             <td>
                                 <div class="overlay-edit">
-                                <a href="" class="btn btn-icon btn-primary"><i class="feather icon-eye"></i></a>
-                                    <button type="button" class="btn btn-icon btn-info" data-toggle="modal" data-target="#editSchoolModal{{$school->id}}"><i class="feather icon-edit"></i></button>
-                                    <button type="button" class="btn btn-icon btn-{{($school->status == 1)? 'danger' : 'success' }}"
-                                    onclick="event.preventDefault(); document.getElementById('changeSatus{{$school->id}}').submit();"><i class="feather icon-Ban"></i>{{($school->status == 1)? 'Disable' : 'Enable' }}</button>
-                                    <button type="button" onclick="event.preventDefault(); document.getElementById('deleteSchool{{$school->id}}').submit();" class="btn btn-icon btn-danger"><i class="feather icon-trash-2"></i></button>
+                                    @if($school->status == 1)
+                                        <a href="{{ url('user/my-school') }}/{{ $school->school_code }}" class="btn btn-icon btn-primary" data-toggle="tooltip" data-placement="top" title="View School"><i class="feather icon-eye"></i></a>
+                                        <button type="button" class="btn btn-icon btn-info" data-toggle="modal" data-target="#editSchoolModal{{$school->id}}" data-placement="top" title="Edit School"><i class="feather icon-edit"></i></button>
+                                    @endif
+                                    <a href="{{ url('user/my-school/status') }}/{{ $school->id }}" class="btn btn-icon btn-{{($school->status == 1)? 'danger' : 'success' }}">
+                                        @if($school->status == 1)<i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Deactivate School"></i> @else <i class="fa fa-check" data-toggle="tooltip" data-placement="top" title="Activate School"></i> @endif
+                                    </a>
+                                    @if($school->status == 1)
+                                        <button type="button" onclick="event.preventDefault(); document.getElementById('deleteSchool{{$school->id}}').submit();" class="btn btn-icon btn-danger" data-toggle="tooltip" data-placement="top" title="Delete School"><i class="feather icon-trash-2"></i></button>
+                                    @endif
                                 </div>
                                 <form action="" id="deleteSchool{{$school->id}}" method="post" style="display: none;">
                                     @csrf
