@@ -15,7 +15,7 @@ class School extends Model
      * @var array
      */
     protected $fillable = [
-        'school_code', 'user_id', 'type_teaching', 'audience', 'featured_image', 'featured_video', 'name', 'slug', 'views', 'requirements', 'descriptions', 'aim', 'category'
+        'school_code', 'user_id', 'type_teaching', 'audience', 'featured_image', 'featured_video', 'name', 'slug', 'views', 'requirements', 'descriptions', 'aim', 'category', 'status'
     ];
 
     /**
@@ -26,4 +26,14 @@ class School extends Model
     protected $hidden = [
       'deleted_at', 
     ];
+
+    public function status(){
+      $id = $this->attributes['status'];
+      if($id==1){
+          return 'Active';
+      }
+      else{
+          return 'Disabled';
+      }
+  }
 }

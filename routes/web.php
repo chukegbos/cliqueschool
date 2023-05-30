@@ -23,9 +23,16 @@ Route::group(['prefix' => 'user'], function(){
         Route::get('/', 'SchoolController@index');
         Route::get('create', 'SchoolController@create');
         Route::post('create', 'SchoolController@store');
+        Route::get('status/{id}', 'SchoolController@status');
+        Route::get('delete/{id}', 'SchoolController@destroy');
         Route::get('{school_code}', 'SchoolController@view')->name('schoolview');
     });
 });
+
+Route::group(['prefix' => 'category'], function(){
+    Route::get('/', 'CategoryController@index');
+});
+
 Route::get('dashboard', 'HomeController@index')->name('home');
 Route::get('setup', 'HomeFrontController@setup')->name('setup');
 Route::post('setup', 'HomeFrontController@storesetup')->name('setup');
