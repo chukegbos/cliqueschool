@@ -8,7 +8,8 @@ use App\Models\Learner;
 use App\Models\Lecture;
 use App\Models\Assignment;
 use App\Models\School;
-use Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class LectureController extends Controller
 {
@@ -25,7 +26,8 @@ class LectureController extends Controller
 
     public function create()
     {
-        return view('user.createSchool');
+        
+        return view('user.createLecture');
     }
 
     public function store(Request $request)
@@ -70,13 +72,14 @@ class LectureController extends Controller
         }
 
         $lecture_code = rand(9999, 999999);
-        $success = School::create([
+
+        $success = Lecture::create([
             'school_id' => $request->school_id,
             'title' => $request->title,
             'description' => $request->description,
             'featured_image' => $path,
-            'video' => $url,
-            'pdf' => $pdf,
+            'video' => $url ?? Null,
+            'pdf' => $pdf ?? Null,
             'featured_video' => $request->featured_video,
             'lecture_code' => $lecture_code,
         ]);
@@ -98,10 +101,11 @@ class LectureController extends Controller
     
         $assignment = Assignment::where('deleted_at', NULL)->find($lecture->id);
         
-        return $data= [
+        $data= [
             'assignment' => $assignment,
             'lecture' => $lecture,
         ];
+        
         return view('user.lectureSchool', compact('data'));
     }
 

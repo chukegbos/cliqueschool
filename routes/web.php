@@ -29,7 +29,8 @@ Route::group(['prefix' => 'user'], function(){
         Route::get('{school_code}', 'SchoolController@view')->name('schoolview');
    
         Route::group(['prefix' => 'lecture'], function(){
-            Route::post('create', 'LectureController@index');
+            Route::post('create', 'LectureController@store')->name('storeLecture');
+            Route::get('create', 'LectureController@create')->name('createLecturePage');
             Route::get('{lecture_code}', 'LectureController@view')->name('lectureview');
         });
 

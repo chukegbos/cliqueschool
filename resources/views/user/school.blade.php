@@ -53,7 +53,8 @@
                                         @if($school->status == 1)<i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Deactivate School"></i> @else <i class="fa fa-check" data-toggle="tooltip" data-placement="top" title="Activate School"></i> @endif
                                     </a>
                                     @if($school->status == 1)
-                                        <button type="button" onclick="event.preventDefault(); document.getElementById('deleteSchool{{$school->id}}').submit();" class="btn btn-icon btn-danger" data-toggle="tooltip" data-placement="top" title="Delete School"><i class="feather icon-trash-2"></i></button>
+                                        <button type="button" onclick="event.preventDefault(); document.getElementById('deleteSchool{{$school->id}}').submit();" class="btn btn-icon btn-danger" data-toggle="tooltip" data-placement="top" title="Delete School">
+                                        <i class="feather icon-trash-2"></i></button>
                                     @endif
                                 </div>
                                 <form action="" id="deleteSchool{{$school->id}}" method="post" style="display: none;">

@@ -79,6 +79,7 @@ class SchoolController extends Controller
     public function view($school_code)
     {
         $school =  School::where('deleted_at', NULL)->where('school_code', $school_code)->first();
+
         if(!$school){
             return redirect()->back()->withErrors(['School not found. Just try again']);
         }
@@ -89,8 +90,10 @@ class SchoolController extends Controller
     
         $learners = Learner::where('deleted_at', NULL)->where('class_id', $school->id)->get();
         $lectures = Lecture::where('deleted_at', NULL)->where('school_id', $school->id)->get();
+
         $liveClasses = NULL;
         $quizzes = NULL;
+
         $data= [
             'school' => $school,
             'learners' => $learners,
