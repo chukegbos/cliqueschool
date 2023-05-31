@@ -28,7 +28,7 @@
         <div class="card" id="profile">
             <div class="card-body  card2 pt-3">
                 <div class="row">
-                    <div class="col-lg-6 col-md-9 f-18 font-weight-bold text-uppercase">Profile</div>
+                    <div class="col-lg-6 col-md-9 f-18 font-weight-bold text-uppercase">School Details</div>
                     <div class="col-lg-6 col-md-9 text-right f-16 font-weight-bold text-uppercase profile-social">
                         <ul>
                             <li><a href="{{ auth()->user()->facebook}}" class="icoFacebook" title="Facebook"><i class="mdi mdi-facebook"></i></a></li>

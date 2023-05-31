@@ -96,7 +96,7 @@ class SchoolController extends Controller
             'learners' => $learners,
             'lectures' => $lectures,
             'quizzes' => $quizzes,
-            'liveClasses' => $liveClasses,
+            'liveClasses' => $liveClasses
         ];
         return view('user.viewSchool', compact('data'));
     }
