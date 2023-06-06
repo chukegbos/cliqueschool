@@ -12,16 +12,16 @@
 </div>
 
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-10">
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="{{ route('storeLecture') }}" enctype="multipart/form-data">
                     @csrf
                    
-                    <input type="hidden" name="school_id" value="{{request()->id}}">
+                    <input type="hidden" name="school_id" value="{{ $school->id }}">
                     
                     <div class="form-group">
-                        <label>Lecture Title<span class="text text-danger"><small><i>(Compulsory)</i></small></span></label>
+                        <label>Lecture Title <span class="text text-danger"><small><i>(Compulsory)</i></small></span></label>
                         <input class="form-control" type="text" name="title" required="" placeholder="Introduction to AI" required>
                     </div>
 
@@ -29,12 +29,6 @@
                         <label>Featured Image <span class="text text-info"><small><i>(Optional)</i></small></span></label>
                         <input class="form-control" type="file" name="featured_image">
                     </div>
-
-                    <div class="form-group">
-                        <label>Featured Video (video link only) <span class="text text-info"><small><i>(Optional)</i></small></span></label>
-                        <input class="form-control" type="text" name="featured_video" placeholder="https://youtube.com/channel">
-                    </div>
-
 
                     <div class="form-group">
                         <label>Lecture Document(PDF) <span class="text text-info"><small><i>(Optional)</i></small></span></label>
@@ -47,8 +41,8 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Brief Description <span class="text text-info"><small><i>(Optional)</i></small></span></label>
-                        <textarea rows="2" id="description" name="description" class="form-control"></textarea>
+                        <label>Description <span class="text text-danger"><small><i>(Compulsory)</i></small></span></label>
+                        <textarea rows="5" id="description" name="description" class="form-control"></textarea>
                     </div>
 
                     <button class="btn btn-grey btn-block" type="submit">Proceed</button>
