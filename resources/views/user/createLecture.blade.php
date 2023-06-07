@@ -51,6 +51,7 @@
         </div>
     </div>
 </div>
+
 <script>
     ClassicEditor
         .create(document.querySelector( '#description' ) )
