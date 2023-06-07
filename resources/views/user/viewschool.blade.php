@@ -217,7 +217,7 @@
             </div>
             <div class="card-body">
                 <div class="row justify-content-between">
-                    @foreach ($data['lectures'] as $lecture) 
+                    @foreach( $data['lectures'] as $lecture ) 
                         <div class="col-md-4">
                             <div class="card" style="width: 280px; height: 319px;">
                                 <img class="card-img-top" style="height: 20vh;" src="{{$lecture->featured_image}}" alt="Card image cap">
@@ -241,7 +241,7 @@
                                     <button class="btn btn-sm btn-info" data-placement="top" title="Edit Lecture" data-toggle="modal" data-target="#lectureModal{{$lecture->id}}"> <i class="fas fa-edit"></i> </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="modal fade" id="lectureModal{{$lecture->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
@@ -302,7 +302,7 @@
                                 </div>
                             </div>
                         </div>
-                     @endforeach 
+                    @endforeach 
                 </div>
             </div>
         </div>
