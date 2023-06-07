@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Assignment;
+use Illuminate\Support\Str;
 use App\Models\User;
 
 class Lecture extends Model
@@ -28,6 +29,11 @@ class Lecture extends Model
         else{
             return NULL;
         }
+    }
+
+    public function description(){
+        $description = $this->attributes['description'];
+        return Str::words($description, 20);
     }
 
     public function assignment(){

@@ -24,19 +24,24 @@ class LectureController extends Controller
     }
 
 
-    public function create()
+    public function create($school_code)
     {
-        
-        return view('user.createLecture');
+        $school = School::where('deleted_at', NULL)->where('user_id', auth()->user()->id)->where('school_code', $school_code)->first();
+        if(!$school){
+            return redirect()->back()->withErrors(['School not found. Just try again']);
+        }
+        return view('user.createLecture', compact('school'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:25',
+            'title' => 'required|string',
             'description' => 'required',
         ]);
-        
+
+        $lecture_code = rand(9999, 999999);
+
         if($request->file('featured_image')){
             $image = base64_encode(file_get_contents($request->file('featured_image')->path()));
             $path = 'data:image/png;base64,'.$image;
@@ -48,13 +53,11 @@ class LectureController extends Controller
             ]);
             
             $uploadedFile = $request->file('pdf');
-            $filename = time().$uploadedFile->getClientOriginalName();
+            $filename = $lecture_code . 'pdf';
+            $filePath = 'lectures/'.$filename;
 
-            $pdf = Storage::disk('public')->putFileAs(
-                'lectures/'.$filename,
-                $uploadedFile,
-                $filename
-            );
+            $pdf = Storage::disk('public')->putFileAs($filePath, $uploadedFile, $filename);
+            $pdf = Storage::disk('public')->url($filePath);
         }
       
         if($request->video){
@@ -62,7 +65,7 @@ class LectureController extends Controller
                 'video' => 'required|file|mimetypes:video/mp4',
             ]);
 
-            $fileName = $request->video->getClientOriginalName();
+            $fileName = $lecture_code . 'mp4';
             $filePath = 'videos/' . $fileName;
 
             $isFileUploaded = Storage::disk('public')->put($filePath, file_get_contents($request->video));
@@ -71,7 +74,7 @@ class LectureController extends Controller
             $url = Storage::disk('public')->url($filePath);
         }
 
-        $lecture_code = rand(9999, 999999);
+        
 
         $success = Lecture::create([
             'school_id' => $request->school_id,

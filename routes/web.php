@@ -27,16 +27,16 @@ Route::group(['prefix' => 'user'], function(){
         Route::get('status/{id}', 'SchoolController@status');
         Route::get('delete/{id}', 'SchoolController@destroy');
         Route::get('{school_code}', 'SchoolController@view')->name('schoolview');
-   
+      
         Route::group(['prefix' => 'lecture'], function(){
-            Route::post('create', 'LectureController@store')->name('storeLecture');
-            Route::get('create', 'LectureController@create')->name('createLecturePage');
+            Route::post('', 'LectureController@store')->name('storeLecture');
+            Route::put('{id}', 'LectureController@store')->name('updateLecture');
+            Route::get('create/{school_code}', 'LectureController@create')->name('createLecturePage');
             Route::get('{lecture_code}', 'LectureController@view')->name('lectureview');
         });
 
         Route::group(['prefix' => 'assignment'], function(){
             Route::post('create', 'AssignmentController@store');
-           
         });
         
     });

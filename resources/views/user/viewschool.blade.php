@@ -210,39 +210,42 @@
             <div class="card-body  card2 pt-5 pb-2">
                 <div class="row justify-content-between align-items-center">
                     <div class="f-18 font-weight-bold text-uppercase">Lectures</div>
-                    <div class="f-18 font-weight-bold pr-5">
-                        <a class="btn btn-sm btn-primary" href="{{route('createLecturePage', ['id' => $data['school']->id])}}">Add Lecture</a>
+                    <div class="f-18 font-weight-bold pr-5"> 
+                        <a class="btn btn-sm btn-primary" href="{{ url('user/my-school/lecture/create') }}/{{ $data['school']->school_code }}">Add Lecture</a>
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="row justify-content-between">
-                    @foreach( $data['lectures'] as $lecture ) 
-                        <div class="col-md-4">
-                            <div class="card" style="width: 280px; height: 319px;">
-                                <img class="card-img-top" style="height: 20vh;" src="{{$lecture->featured_image}}" alt="Card image cap">
+                    @forelse ($data['lectures'] as $lecture) 
+                        <div class="col-md-6">
+                            <div class="card">
+                                <img class="card-img-top img-responsive" style="height: 25vh;" src="{{ $lecture->featured_image }}" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title my-0">Lecture Title</h5>
-                                    <small class="text-muted">Author name</small>
-                                    <p class="my-0">
+                                    <h4 class="card-title text-center">
+                                        <strong>{{ $lecture->title }}</strong><br>
+                                        <small>{{ $data['school']->name }}</small>
+                                    </h4>
+                                    
+                                    <!-- <p class="my-0">
                                         <i style="color: #E59819" class="fas fa-star"></i>
                                         <i style="color: #E59819" class="fas fa-star"></i>
                                         <i style="color: #E59819" class="fas fa-star"></i>
                                         <i style="color: #E59819" class="fas fa-star"></i>
                                         <i style="color: #E59819" class="fas fa-star"></i>
-                                    </p>
-                                    <p class="card-text my-0">
-                                        Brief description
+                                    </p> -->
+                                    <p class="card-text mt-1 text-justify">
+                                        {!!html_entity_decode($lecture->description())!!}
                                     </p>
                                 </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="View Lecture"> <i class="fas fa-eye"></i> </button>
+                                <div class="card-footer text-center">
+                                    <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="View Lecture" href="{{ url('user/my-school/lecture') }}/{{ $lecture->lecture_code }}"> <i class="fas fa-eye"></i> </a>
                                     <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete Lecture"> <i class="fas fa-trash"></i> </button>
                                     <button class="btn btn-sm btn-info" data-placement="top" title="Edit Lecture" data-toggle="modal" data-target="#lectureModal{{$lecture->id}}"> <i class="fas fa-edit"></i> </button>
                                 </div>
                             </div>
-                        </div>                        
-                        <div class="modal fade" id="lectureModal{{$lecture->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        </div>
+                        <div class="modal fade" id="lectureModal{{ $lecture->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -254,26 +257,18 @@
                                     <div class="modal-body">
                                         <div class="card">
                                             <div class="card-body">
-                                                <form method="POST" action="{{ route('storeLecture') }}" enctype="multipart/form-data">
+                                                <form method="POST" action="{{ url('user/my-school/lecture') }}/{{ $lecture->id }}" enctype="multipart/form-data">
                                                     @csrf
-                                                
-                                                    <input type="hidden" name="school_id" value="{{request()->id}}">
                                                     
                                                     <div class="form-group">
-                                                        <label>Lecture Title<span class="text text-danger"><small><i>(Compulsory)</i></small></span></label>
-                                                        <input class="form-control" type="text" name="title" required="" placeholder="Introduction to AI" required>
+                                                        <label>Lecture Title <span class="text text-danger"><small><i>(Compulsory)</i></small></span></label>
+                                                        <input class="form-control" type="text" name="title" required="" value="{{ $lecture->title }}">
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label>Featured Image <span class="text text-info"><small><i>(Optional)</i></small></span></label>
                                                         <input class="form-control" type="file" name="featured_image">
                                                     </div>
-
-                                                    <div class="form-group">
-                                                        <label>Featured Video (video link only) <span class="text text-info"><small><i>(Optional)</i></small></span></label>
-                                                        <input class="form-control" type="text" name="featured_video" placeholder="https://youtube.com/channel">
-                                                    </div>
-
 
                                                     <div class="form-group">
                                                         <label>Lecture Document(PDF) <span class="text text-info"><small><i>(Optional)</i></small></span></label>
@@ -286,8 +281,15 @@
                                                     </div>
                                                     
                                                     <div class="form-group">
-                                                        <label>Brief Description <span class="text text-info"><small><i>(Optional)</i></small></span></label>
-                                                        <textarea rows="2" id="description" name="description" class="form-control"></textarea>
+                                                        <label>Description <span class="text text-danger"><small><i>(Compulsory)</i></small></span></label>
+                                                        <textarea rows="2" id="description{{ $lecture->id }}" name="description" class="form-control">{{ $lecture->description }}</textarea>
+                                                        <script>
+                                                            ClassicEditor
+                                                                .create(document.querySelector( '#description{{ $lecture->id }}' ) )
+                                                                .catch( error => {
+                                                                    console.error( error );
+                                                                } );
+                                                        </script>
                                                     </div>
 
                                                     <button class="btn btn-grey btn-block" type="submit">Proceed</button>
@@ -302,12 +304,13 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach 
+                    @empty
+                        <div class="col-md-12"></div>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 <script>
     function hideDiv(e) {
